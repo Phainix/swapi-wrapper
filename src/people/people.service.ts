@@ -7,7 +7,7 @@ import {
   SwapiStarship,
   SwapiVehicle,
 } from 'src/common/interfaces/swapi.interface';
-import { appendIdFromURL } from 'src/common/utils';
+import { appendIdFromURL, filterOutNulls } from 'src/common/utils';
 import { SwapiService } from '../common/swapi.service';
 import { DetailedPerson, Person } from './interfaces/people.interface';
 
@@ -38,9 +38,9 @@ export class PeopleService {
     return {
       ...person,
       homeworld: homeworld.name,
-      films: films.map((film) => film.title),
-      vehicles: vehicles.map((vehicle) => vehicle.name),
-      starships: starships.map((starship) => starship.name),
+      films: filterOutNulls(films).map((film) => film.title),
+      vehicles: filterOutNulls(vehicles).map((vehicle) => vehicle?.name),
+      starships: filterOutNulls(starships).map((starship) => starship.name),
     };
   }
 }

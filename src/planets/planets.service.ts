@@ -5,7 +5,7 @@ import {
   SwapiPlanet,
   SwapiPlanetsResponse,
 } from 'src/common/interfaces/swapi.interface';
-import { appendIdFromURL } from 'src/common/utils';
+import { appendIdFromURL, filterOutNulls } from 'src/common/utils';
 import { SwapiService } from '../common/swapi.service';
 import { DetailedPlanet, Planet } from './interfaces/planets.interface';
 
@@ -33,8 +33,8 @@ export class PlanetsService {
 
     return {
       ...planet,
-      films: films.map((film) => film.title),
-      residents: residents.map((resident) => resident.name),
+      films: filterOutNulls(films).map((film) => film.title),
+      residents: filterOutNulls(residents).map((resident) => resident.name),
     };
   }
 }

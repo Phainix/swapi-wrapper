@@ -21,10 +21,15 @@ export class SwapiService {
     }
   }
 
-  async fetchMultiple<T>(urls: string[]): Promise<T[]> {
-    return Promise.all(
+  async fetchMultiple<T>(urls: string[]): Promise<(T | null)[]> {
+    return await Promise.all(
       urls.map(async (url) => {
-        return await this.fetch<T>(url);
+        try {
+          return await this.fetch<T>(url);
+        } catch {
+          console.log('catching the error');
+          return null;
+        }
       }),
     );
   }

@@ -9,3 +9,7 @@ export const appendIdFromURL = <T extends { url: string }>(
     id: lastSegment,
   };
 };
+
+export const filterOutNulls = <T>(data: (T | null)[]): T[] => {
+  return data.filter((item): item is T => item !== null);
+};
