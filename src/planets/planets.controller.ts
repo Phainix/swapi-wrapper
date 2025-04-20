@@ -1,6 +1,8 @@
-import { Controller, HttpCode, Get, Param } from '@nestjs/common';
+import { Controller, HttpCode, Get, Param, Query } from '@nestjs/common';
 import { PlanetsService } from './planets.service';
 import { Planet, DetailedPlanet } from './interfaces/planets.interface';
+import { Paginated } from 'src/common/interfaces/pagination.interface';
+import { ApiQuery } from '@nestjs/swagger';
 
 @Controller('planets')
 export class PlanetsController {
@@ -8,8 +10,14 @@ export class PlanetsController {
 
   @Get('')
   @HttpCode(200)
-  findAll(): Promise<Planet[]> {
-    return this.planetsService.getPlanets();
+  @ApiQuery({
+    name: 'page',
+    required: false,
+    type: Number,
+    description: 'Page number',
+  })
+  findAll(@Query('page') page = 1): Promise<Paginated<Planet>> {
+    return this.planetsService.getPlanets(page);
   }
 
   @Get(':id')

@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  NotFoundException,
+} from '@nestjs/common';
 import {
   SwapiFilm,
   SwapiPeopleResponse,
@@ -7,25 +11,43 @@ import {
   SwapiStarship,
   SwapiVehicle,
 } from 'src/common/interfaces/swapi.interface';
-import { appendIdFromURL, filterOutNulls } from 'src/common/utils';
+import {
+  appendIdFromURL,
+  calculateTotalPages,
+  filterOutNulls,
+} from 'src/common/utils';
 import { SwapiService } from '../common/swapi.service';
 import { DetailedPerson, Person } from './interfaces/people.interface';
+import { Paginated } from 'src/common/interfaces/pagination.interface';
 
 @Injectable()
 export class PeopleService {
   constructor(private readonly swapi: SwapiService) {}
 
-  async getPeople(): Promise<Person[]> {
-    const res = await this.swapi.fetch<SwapiPeopleResponse>(
-      `${this.swapi.baseUrl}/people/?expanded=true`,
-    );
-    return res.results.map((swapiPerson) => appendIdFromURL(swapiPerson));
+  async getPeople(page: number): Promise<Paginated<Person>> {
+    try {
+      const res = await this.swapi.fetch<SwapiPeopleResponse>(
+        `${this.swapi.baseUrl}/people/?page=${page}`,
+      );
+      return {
+        results: res.results.map((swapiPerson) => appendIdFromURL(swapiPerson)),
+        count: res.count,
+        pages: calculateTotalPages(res.count, 10),
+      };
+    } catch {
+      throw new InternalServerErrorException('Unable to fetch people');
+    }
   }
 
   async getPersonById(id: string): Promise<DetailedPerson> {
-    const response = await this.swapi.fetch<SwapiPerson>(
-      `${this.swapi.baseUrl}/people/${id}`,
-    );
+    let response: SwapiPerson;
+    try {
+      response = await this.swapi.fetch<SwapiPerson>(
+        `${this.swapi.baseUrl}/people/${id}`,
+      );
+    } catch {
+      throw new NotFoundException('Person not found');
+    }
     const person = appendIdFromURL(response);
 
     const [homeworld, films, vehicles, starships] = await Promise.all([
