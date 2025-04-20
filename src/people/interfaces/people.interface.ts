@@ -9,9 +9,6 @@ export interface Person {
   birth_year: string;
   gender: string;
   homeworld?: string;
-  films?: string[];
-  vehicles?: string[];
-  starships?: string[];
 }
 
 export interface DetailedPerson extends Person {

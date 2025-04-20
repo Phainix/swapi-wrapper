@@ -1,47 +1,11 @@
-export interface SwapiCommon {
-  message: string;
-  apiVersion: string;
-  timestamp: string;
-  support: SwapiSupport;
-  social: SwapiSocial;
-}
-
-export interface SwapiPeopleResponse extends SwapiCommon {
-  total_records: number;
-  total_pages: number;
+export interface SwapiPeopleResponse {
+  count: number;
   previous: string | null;
   next: string | null;
   results: SwapiPerson[];
 }
 
-export interface SwapiPersonResponse extends SwapiCommon {
-  result: SwapiPerson;
-}
-
-export interface SwapiCommonResponse extends SwapiCommon {
-  result: { properties: { name: string } };
-}
-
-export interface SwapiFilmResponse extends SwapiCommon {
-  result: {
-    properties: {
-      title: string;
-      starships: string[];
-      vehicles: string[];
-      characters: string[];
-    };
-  }[];
-}
-
 export interface SwapiPerson {
-  properties: SwapiPersonProperties;
-  _id: string;
-  description: string;
-  uid: string;
-  __v: number;
-}
-
-export interface SwapiPersonProperties {
   created: string;
   edited: string;
   name: string;
@@ -54,21 +18,80 @@ export interface SwapiPersonProperties {
   homeworld: string;
   birth_year: string;
   url: string;
+  films: string[];
+  species: string[];
+  vehicles: string[];
+  starships: string[];
 }
 
-export interface SwapiSupport {
-  contact: string;
-  donate: string;
-  partnerDiscounts: {
-    saberMasters: {
-      link: string;
-      details: string;
-    };
-  };
+export interface SwapiFilmsResponse {
+  count: number;
+  previous: string | null;
+  next: string | null;
+  results: SwapiFilm[];
 }
 
-export interface SwapiSocial {
-  discord: string;
-  reddit: string;
-  github: string;
+export interface SwapiFilm {
+  created: string;
+  edited: string;
+  title: string;
+  starships: string[];
+  vehicles: string[];
+  characters: string[];
+  url: string;
+}
+
+export interface SwapiStarshipsResponse {
+  count: number;
+  previous: string | null;
+  next: string | null;
+  results: SwapiFilm[];
+}
+
+export interface SwapiStarship {
+  created: string;
+  edited: string;
+  name: string;
+  pilots: string[];
+  vehicfilmsles: string[];
+  url: string;
+}
+
+export interface SwapiPlanetsResponse {
+  count: number;
+  previous: string | null;
+  next: string | null;
+  results: SwapiPlanet[];
+}
+
+export interface SwapiPlanet {
+  created: string;
+  edited: string;
+  climate: string;
+  surface_water: string;
+  name: string;
+  diameter: string;
+  rotation_period: string;
+  terrain: string;
+  gravity: string;
+  orbital_period: string;
+  population: string;
+  url: string;
+  residents: string[];
+  films: string[];
+}
+
+export interface SwapiVehiclesResponse {
+  count: number;
+  previous: string | null;
+  next: string | null;
+  results: SwapiVehicle[];
+}
+
+export interface SwapiVehicle {
+  created: string;
+  edited: string;
+  name: string;
+  url: string;
+  films: string[];
 }

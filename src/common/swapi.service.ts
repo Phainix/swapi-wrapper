@@ -4,7 +4,7 @@ import { safeHttp } from './safeHttp';
 
 @Injectable()
 export class SwapiService {
-  public readonly baseUrl = 'https://swapi.tech/api';
+  public readonly baseUrl = 'https://swapi.py4e.com/api';
 
   constructor(private readonly httpService: HttpService) {}
 
