@@ -55,11 +55,18 @@ yarn test
 
 ## 📘 Example Endpoints
 
-• GET /people?page=1
+#### • GET /people?page=1
+
 → Paginated list of people.
-• GET /people/:id
+
+#### • GET /people/:id
+
 → Person details (with resolved homeworld, starships, etc).
-• GET /planets?page=1
+
+#### • GET /planets?page=1
+
 → Paginated list of planets.
-• GET /planets/:id
+
+#### • GET /planets/:id
+
 → Planet details (with resolved residents and films).
