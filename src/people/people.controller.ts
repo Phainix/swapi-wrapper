@@ -16,8 +16,17 @@ export class PeopleController {
     type: Number,
     description: 'Page number',
   })
-  findAll(@Query('page') page = 1): Promise<Paginated<Person>> {
-    return this.peopleService.getPeople(page);
+  @ApiQuery({
+    name: 'search',
+    required: false,
+    type: String,
+    description: 'Search',
+  })
+  async findAll(
+    @Query('page') page = 1,
+    @Query('search') search = '',
+  ): Promise<Paginated<Person>> {
+    return this.peopleService.getPeople(page, search);
   }
 
   @Get(':id')

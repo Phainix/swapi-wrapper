@@ -24,10 +24,10 @@ import { Paginated } from 'src/common/interfaces/pagination.interface';
 export class PeopleService {
   constructor(private readonly swapi: SwapiService) {}
 
-  async getPeople(page: number): Promise<Paginated<Person>> {
+  async getPeople(page: number, search?: string): Promise<Paginated<Person>> {
     try {
       const res = await this.swapi.fetch<SwapiPeopleResponse>(
-        `${this.swapi.baseUrl}/people/?page=${page}`,
+        `${this.swapi.baseUrl}/people/?page=${page}&search=${search}`,
       );
       return {
         results: res.results.map((swapiPerson) => appendIdFromURL(swapiPerson)),
