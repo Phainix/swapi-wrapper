@@ -1053,6 +1053,11 @@
   dependencies:
     tslib "2.8.1"
 
+"@nestjs/throttler@^6.4.0":
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/@nestjs/throttler/-/throttler-6.4.0.tgz#5060e2157f4e8b0cb7886eef367751700549de5e"
+  integrity sha512-osL67i0PUuwU5nqSuJjtUJZMkxAnYB4VldgYUMGzvYRJDCqGRFMWbsbzm/CkUtPLRL30I8T74Xgt/OQxnYokiA==
+
 "@noble/hashes@^1.1.5":
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.7.2.tgz#d53c65a21658fb02f3303e7ee3ba89d6754c64b4"
